@@ -164,11 +164,33 @@
   .hbar-val{text-align:right;color:var(--ink-2);font-weight:600}
   .big-hero{font-family:var(--serif);font-size:52px;line-height:1}
   .stars{color:var(--gold);letter-spacing:2px;font-size:17px}
+  .stars .off{color:var(--line)}
   .review{padding:13px 0;border-bottom:1px solid var(--line-2)}
   .review:last-child{border-bottom:0}
   .review .rh{display:flex;justify-content:space-between;align-items:center;margin-bottom:4px}
   .review .who{font-weight:600;font-size:13px}
   .review .txt{font-size:13px;color:var(--ink-2);line-height:1.5}
+  /* enriched review cards + panels */
+  .rev-card{display:flex;flex-direction:column;gap:9px;min-height:168px}
+  .rev-card .rh{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
+  .rev-card .who{font-weight:600;font-size:13.5px}
+  .rev-card .meta{font-size:11px;color:var(--ink-3);margin-top:2px}
+  .rev-card .txt{font-size:12.5px;color:var(--ink-2);line-height:1.5;flex:1}
+  .badge-src{font-size:10px;font-weight:600;letter-spacing:.03em;padding:3px 9px;border-radius:999px;
+    background:var(--surface-2);color:var(--ink-2);border:1px solid var(--line);white-space:nowrap}
+  .rev-foot{display:flex;align-items:center;justify-content:space-between;gap:8px;
+    border-top:1px solid var(--line-2);padding-top:9px}
+  .respond-btn{font-size:11px;font-weight:700;color:var(--brand-deep);cursor:pointer;letter-spacing:.02em}
+  .respond-btn:hover{text-decoration:underline}
+  .sumfoot{border-top:1px solid var(--line);padding-top:14px;display:flex;gap:26px;flex-wrap:wrap}
+  .sumfoot .sf{display:flex;flex-direction:column;gap:2px}
+  .sumfoot .sf b{font-family:var(--serif);font-size:20px;font-weight:400}
+  .sumfoot .sf span{font-size:11px;color:var(--ink-3)}
+  .nr-item{display:flex;flex-direction:column;gap:5px;padding:11px 0;border-bottom:1px solid var(--line-2)}
+  .nr-item:last-child{border-bottom:0}
+  .nr-head{display:flex;align-items:center;justify-content:space-between;gap:8px}
+  .nr-head .who{font-weight:600;font-size:12.5px}
+  .nr-snip{font-size:12px;color:var(--ink-2);line-height:1.45}
   /* tooltip */
   #tt{position:fixed;pointer-events:none;z-index:60;background:#2C2016;color:#F6ECDC;font-size:12px;
     padding:8px 11px;border-radius:9px;box-shadow:var(--shadow-lg);opacity:0;transition:opacity .12s;max-width:220px}
@@ -331,15 +353,39 @@ const DATA = {
       {name:"Walk-in", v:6},
     ],
   },
-  // ---- reviews / reputation (review-reputation agent + Google) ----
+  // ---- reviews / reputation (review-reputation agent + Google/Meta) ----
   reviews:{
-    rating:4.8, count:412,
+    rating:4.8, count:412, newThisMonth:18, responseRate:92, avgResponseHrs:6,
     trend:{labels:["Feb","Mar","Apr","May","Jun","Jul"], v:[4.6,4.6,4.7,4.7,4.8,4.8]},
     dist:[{s:5,v:346},{s:4,v:44},{s:3,v:13},{s:2,v:5},{s:1,v:4}],
+    // reviews by source (Google Places API + Meta review feeds)
+    sources:[
+      {name:"Google", v:312, rating:4.8},
+      {name:"Facebook", v:78, rating:4.7},
+      {name:"Instagram", v:22, rating:4.9},
+    ],
+    // sentiment split (review-reputation agent classifier)
+    sentiment:[
+      {name:"Positive", v:390, tone:"ok"},
+      {name:"Neutral", v:16, tone:"warn"},
+      {name:"Negative", v:6, tone:"bad"},
+    ],
+    // awaiting a reply → the review-reputation agent drafts responses
+    needsResponse:[
+      {who:"Hannah W.", s:3, source:"Google", date:"1d ago", snippet:"Loved the tan but reception was really busy at pickup — waited a while."},
+      {who:"Priya K.", s:2, source:"Facebook", date:"2d ago", snippet:"Booking glitch double-charged me. Sorted now but was frustrating."},
+      {who:"Demi L.", s:4, source:"Google", date:"3d ago", snippet:"Great colour! Would love a few earlier Saturday slots."},
+    ],
     recent:[
-      {who:"Sarah M.", s:5, t:"Best tan in Adelaide — Brooke always nails the shade. Booking is so easy now."},
-      {who:"Jess T.", s:5, t:"Membership is such good value. Never streaky, lasts a full week."},
-      {who:"Amelia R.", s:4, t:"Lovely studio and staff. Only wish there were more Sunday slots."},
+      {who:"Sarah M.", s:5, source:"Google", date:"2d ago", responded:true,  t:"Best tan in Adelaide — Brooke always nails the shade. Booking is so easy now."},
+      {who:"Jess T.", s:5, source:"Instagram", date:"3d ago", responded:true, t:"Membership is such good value. Never streaky, lasts a full week."},
+      {who:"Amelia R.", s:4, source:"Google", date:"4d ago", responded:false, t:"Lovely studio and staff. Only wish there were more Sunday slots."},
+      {who:"Chloe B.", s:5, source:"Google", date:"5d ago", responded:true,  t:"Obsessed with my glow for the wedding — everyone asked where I got it done."},
+      {who:"Tayla M.", s:5, source:"Facebook", date:"6d ago", responded:true, t:"Always so welcoming and the tan lasts ages. My go-to before every event."},
+      {who:"Hannah W.", s:3, source:"Google", date:"1d ago", responded:false, t:"Loved the tan but reception was really busy at pickup — waited a while."},
+      {who:"Georgia P.", s:5, source:"Google", date:"8d ago", responded:true, t:"Best rapid tan I've tried — no biscuit smell and develops so evenly."},
+      {who:"Priya K.", s:2, source:"Facebook", date:"2d ago", responded:false, t:"Booking glitch double-charged me. Sorted now but was frustrating."},
+      {who:"Demi L.", s:4, source:"Instagram", date:"3d ago", responded:false, t:"Great colour! Would love a few earlier Saturday slots."},
     ],
   },
   // ---- actionable insights (each tied to an existing lifecycle agent) ----
@@ -686,26 +732,74 @@ function renderMarketing(){
 /* ---------- REVIEWS ---------- */
 function renderReviews(){
   const rv=DATA.reviews, totalR=rv.dist.reduce((a,b)=>a+b.v,0);
+  const fiveStarPct=Math.round(rv.dist[0].v/totalR*100);
+  const fourPlusPct=Math.round((rv.dist[0].v+rv.dist[1].v)/totalR*100);
+  const srcTotal=rv.sources.reduce((a,b)=>a+b.v,0);
+  const stars=s=>`<span class="stars">${"★".repeat(s)}<span class="off">${"★".repeat(5-s)}</span></span>`;
   $("#v-reviews").innerHTML=`
+    <div class="grid row-kpi" style="grid-template-columns:repeat(4,1fr)">
+      ${miniStat("Avg rating","4.8 ★",{a:'up',good:true,t:'+0.1'},"rolling 6-month average")}
+      ${miniStat("Total reviews",""+rv.count,{a:'up',good:true,t:'+'+rv.newThisMonth},rv.newThisMonth+" new this month")}
+      ${miniStat("Response rate",rv.responseRate+"%",{a:'up',good:true,t:'+4 pts'},"reviews replied to")}
+      ${miniStat("Avg response",rv.avgResponseHrs+"h",{a:'down',good:true,t:'−3h'},"time to first reply")}
+    </div>
+    <div class="sec-h"><h2>Reputation</h2><span class="hint">across Google, Facebook &amp; Instagram</span></div>
     <div class="grid row-2">
-      <div class="card pad-lg" style="display:flex;gap:30px;align-items:center">
-        <div style="text-align:center">
-          <div class="big-hero" style="color:var(--brand-deep)">${rv.rating}</div>
-          <div class="stars">★★★★★</div>
-          <div class="mini" style="margin-top:6px">${rv.count} reviews</div>
+      <div class="card pad-lg" style="display:flex;flex-direction:column;gap:16px">
+        <div style="display:flex;gap:28px;align-items:center">
+          <div style="text-align:center;min-width:116px">
+            <div class="big-hero" style="color:var(--brand-deep)">${rv.rating}</div>
+            <div class="stars">★★★★★</div>
+            <div class="mini" style="margin-top:6px">${rv.count} reviews</div>
+          </div>
+          <div style="flex:1" id="rv-dist"></div>
         </div>
-        <div style="flex:1" id="rv-dist"></div>
+        <div class="sumfoot">
+          <div class="sf"><b class="num">${fiveStarPct}%</b><span>5-star</span></div>
+          <div class="sf"><b class="num">${fourPlusPct}%</b><span>4★ &amp; above</span></div>
+          <div class="sf"><b class="num">${rv.responseRate}%</b><span>responded</span></div>
+          <div class="sf"><b class="num">+${rv.newThisMonth}</b><span>new this month</span></div>
+        </div>
       </div>
       ${card("Rating trend","rv-trend","rolling avg, last 6 months","pad-lg")}
     </div>
-    <div class="sec-h"><h2>Recent reviews</h2><span class="hint">surfaced by the review-reputation agent</span></div>
+    <div class="sec-h"><h2>Breakdown</h2></div>
     <div class="grid row-3">
-      ${rv.recent.map(r=>`<div class="card review" style="border-bottom:0">
-        <div class="rh"><span class="who">${r.who}</span><span class="stars">${"★".repeat(r.s)}${"<span style='color:var(--line)'>★</span>".repeat(5-r.s)}</span></div>
-        <div class="txt">“${r.t}”</div></div>`).join("")}
+      ${card("Reviews by source","rv-source","Google · Facebook · Instagram")}
+      ${card("Sentiment","rv-sentiment","classified by the review agent")}
+      <div class="card">
+        <div class="ch-h"><h3>Needs a response</h3><span class="pill warn"><span class="dot"></span>${rv.needsResponse.length}</span></div>
+        <div id="rv-nr"></div>
+        <div style="margin-top:10px;font-size:10.5px;letter-spacing:.05em;text-transform:uppercase;color:var(--ink-3)">↳ agent <b style="color:var(--brand-deep)">/review-reputation</b> drafts replies</div>
+      </div>
+    </div>
+    <div class="sec-h"><h2>Recent reviews</h2><span class="hint">latest across all sources</span></div>
+    <div class="grid row-3">
+      ${rv.recent.map(r=>`<div class="card rev-card">
+        <div class="rh"><div><div class="who">${r.who}</div><div class="meta">${r.date}</div></div><span class="badge-src">${r.source}</span></div>
+        ${stars(r.s)}
+        <div class="txt">“${r.t}”</div>
+        <div class="rev-foot">${r.responded
+          ? `<span class="pill ok"><span class="dot"></span>Responded</span>`
+          : `<span class="pill warn"><span class="dot"></span>Awaiting reply</span><span class="respond-btn">Draft reply →</span>`}</div>
+      </div>`).join("")}
     </div>`;
   reg(()=>hbars($("#rv-dist"),{items:rv.dist.map(d=>({name:d.s+" ★",v:d.v,c:"var(--gold)"})),fmt:v=>Math.round(v/totalR*100)+"%"}));
   reg(()=>lineChart($("#rv-trend"),{labels:rv.trend.labels,series:[{name:"Avg rating",data:rv.trend.v,color:"var(--gold)",area:true}],fmt:v=>v.toFixed(1)+" ★",height:240,zero:false}));
+  reg(()=>{donut($("#rv-source"),{items:rv.sources.map((s,i)=>({name:s.name,v:s.v,c:`var(--c${i+1})`})),center:{v:srcTotal,l:"reviews"},fmt:v=>fmtInt(v)});
+    $("#rv-source").insertAdjacentHTML("beforeend",`<div class="legend">`+rv.sources.map((s,i)=>`<span><i style="background:var(--c${i+1})"></i>${s.name} · ${s.v} · ${s.rating}★</span>`).join("")+`</div>`);});
+  reg(()=>{hbars($("#rv-sentiment"),{items:rv.sentiment.map(s=>({name:s.name,v:s.v,c:`var(--${s.tone})`})),fmt:v=>Math.round(v/rv.count*100)+"%"});
+    $("#rv-sentiment").insertAdjacentHTML("beforeend",
+      `<div style="border-top:1px solid var(--line-2);margin-top:16px;padding-top:14px">
+        <span style="font-family:var(--serif);font-size:22px;color:var(--ok)">95%</span>
+        <span style="font-size:12.5px;color:var(--ink-2)"> positive sentiment</span>
+        <div class="mini" style="margin-top:4px">${rv.sentiment[1].v} neutral · ${rv.sentiment[2].v} negative — trending up vs last quarter</div>
+      </div>`);});
+  $("#rv-nr").innerHTML=rv.needsResponse.map(n=>`<div class="nr-item">
+    <div class="nr-head"><span class="who">${n.who}</span><span class="badge-src">${n.source}</span></div>
+    <div>${stars(n.s)} <span style="font-size:11px;color:var(--ink-3)">· ${n.date}</span></div>
+    <div class="nr-snip">“${n.snippet}”</div>
+  </div>`).join("");
 }
 
 /* ============================================================================
