@@ -198,6 +198,29 @@
   #tt .tt-r{display:flex;align-items:center;gap:7px;white-space:nowrap}
   #tt .tt-r i{width:9px;height:9px;border-radius:2px}
   #tt b{font-variant-numeric:tabular-nums}
+  /* drill-down drawer */
+  #scrim{position:fixed;inset:0;background:rgba(44,32,22,.30);backdrop-filter:blur(2px);opacity:0;pointer-events:none;transition:opacity .25s;z-index:40}
+  #drawer{position:fixed;top:0;right:0;height:100vh;width:min(468px,93vw);background:var(--surface);
+    box-shadow:-20px 0 60px -22px rgba(80,55,25,.45);transform:translateX(100%);
+    transition:transform .3s cubic-bezier(.4,0,.2,1);z-index:50;display:flex;flex-direction:column}
+  body.dw-open #scrim{opacity:1;pointer-events:auto}
+  body.dw-open #drawer{transform:none}
+  .dw-head{padding:22px 24px 16px;border-bottom:1px solid var(--line);display:flex;align-items:flex-start;gap:12px}
+  .dw-title{font-family:var(--serif);font-weight:400;font-size:21px;margin:0}
+  .dw-sub{font-size:12.5px;color:var(--ink-3);margin-top:4px}
+  .dw-x{margin-left:auto;cursor:pointer;color:var(--ink-3);font-size:24px;line-height:1;background:none;border:0;padding:0 6px;border-radius:8px}
+  .dw-x:hover{background:var(--surface-2);color:var(--ink)}
+  .dw-body{padding:18px 24px 30px;overflow-y:auto;flex:1}
+  .dw-metric{display:flex;align-items:baseline;gap:12px;margin-bottom:4px}
+  .dw-metric .m-val{font-family:var(--serif);font-size:34px}
+  .dw-note{font-size:12px;color:var(--ink-2);background:var(--surface-2);border-radius:10px;padding:11px 13px;margin-top:16px;line-height:1.5}
+  .dw-note b{color:var(--brand-deep)}
+  .drillable{cursor:pointer}
+  .drillable:hover{transform:translateY(-2px);box-shadow:var(--shadow-lg);transition:transform .12s,box-shadow .12s}
+  th.sortable{cursor:pointer;user-select:none;white-space:nowrap}
+  th.sortable:hover{color:var(--ink)}
+  th.sortable .caret{opacity:.35;font-size:8px;margin-left:4px}
+  th.sortable.asc .caret,th.sortable.desc .caret{opacity:1;color:var(--brand)}
   svg .grid-l{stroke:var(--line);stroke-width:1}
   svg .axis-t{fill:var(--ink-3);font-size:10.5px;font-family:var(--sans)}
   .foot-note{font-size:11.5px;color:var(--ink-3);padding:26px 34px 0;line-height:1.6;max-width:900px}
@@ -206,6 +229,11 @@
 </head>
 <body data-palette="#C17A22,#1B8A6B,#C0492A,#2A6DA6">
 <div id="tt"></div>
+<div id="scrim"></div>
+<aside id="drawer" aria-hidden="true">
+  <div class="dw-head"><div><h3 class="dw-title"></h3><div class="dw-sub"></div></div><button class="dw-x" id="dwClose" aria-label="Close">×</button></div>
+  <div class="dw-body"></div>
+</aside>
 <div class="app">
   <!-- ================= SIDEBAR ================= -->
   <aside>
@@ -405,6 +433,39 @@ const DATA = {
     {name:"Ella Roberts", pkg:"Unlimited Member", last:"63d ago", visits:11, spend:560, status:"bad"},
     {name:"Zoe Walker", pkg:"Bridal / Event", last:"9d ago", visits:2, spend:210, status:"ok"},
   ],
+  // ---- drill-down detail for the "needs attention" cards (Member API queries) ----
+  drill:{
+    "failed-payment-churn-saver":{title:"Failed payments — at risk", sub:"$1,240 across 12 memberships · last debit run",
+      cols:["Member","Package","Amount","Tries","Last attempt"], total:12,
+      rows:[["Ella Roberts","Unlimited","$59","2","Today"],["Sophie Grant","Unlimited","$59","3","Today"],
+        ["Ruby Clarke","10-Tan Pack","$120","1","Yesterday"],["Layla Reed","Unlimited","$59","2","Yesterday"],
+        ["Isla Moore","Unlimited","$59","1","2d ago"],["Mia Nguyen","10-Tan Pack","$120","2","2d ago"],
+        ["Freya Hall","Unlimited","$59","1","3d ago"],["Chloe Ward","Unlimited","$59","2","3d ago"]],
+      note:"<b>/failed-payment-churn-saver</b> auto-retries the debit, then texts a card-update link before the membership cancels."},
+    "casual-to-membership":{title:"Casual clients ready to convert", sub:"23 clients · 5+ visits, no membership",
+      cols:["Client","Visits","Last visit","Spent"], total:23,
+      rows:[["Grace Lee","7","3d ago","$203"],["Ava Simmons","9","1d ago","$261"],["Poppy Dean","6","5d ago","$174"],
+        ["Zoe Walker","8","2d ago","$232"],["Harper Ross","11","4d ago","$319"],["Ivy Chen","6","6d ago","$174"],
+        ["Mila Fox","7","1d ago","$203"],["Nina Patel","10","3d ago","$290"]],
+      note:"<b>/casual-to-membership</b> sends a tailored membership offer once a casual client crosses 5 visits."},
+    "win-back-engine":{title:"Lapsed members — win-back", sub:"41 members · no booking in 60+ days",
+      cols:["Member","Package","Last visit"], total:41,
+      rows:[["Ella Roberts","Unlimited","63d ago"],["Bella Knight","10-Tan Pack","67d ago"],["Sienna Cole","Unlimited","71d ago"],
+        ["Ada Perry","Casual","74d ago"],["Lucy Grant","Unlimited","78d ago"],["Maya Hunt","Unlimited","82d ago"],
+        ["Erin Booth","10-Tan Pack","88d ago"],["Tara Vance","Unlimited","91d ago"]],
+      note:"<b>/win-back-engine</b> runs a staged re-engagement offer (come-back discount → last-chance) over two weeks."},
+    "first-timer-repeat":{title:"First-timers to rebook", sub:"68 clients · one tan in 14 days, no next booking",
+      cols:["Client","First tan","Source"], total:68,
+      rows:[["Amelia R.","2d ago","Google"],["Demi L.","3d ago","Instagram"],["Holly K.","4d ago","Meta"],
+        ["Jade M.","5d ago","Walk-in"],["Ruby S.","6d ago","Google"],["Elena V.","7d ago","Referral"],
+        ["Faith O.","9d ago","Meta"],["Cara D.","11d ago","Instagram"]],
+      note:"<b>/first-timer-repeat</b> nudges a second booking 3–5 days after a first tan — the biggest retention lever."},
+    "segmentation":{title:"Clients missing contact info", sub:"17 clients · no email or mobile on file",
+      cols:["Client","Missing","Added"], total:17,
+      rows:[["J. Smith","Email + mobile","4d ago"],["A. Brown","Mobile","5d ago"],["K. Taylor","Email","6d ago"],
+        ["M. Wilson","Email + mobile","8d ago"],["R. Davies","Mobile","9d ago"],["S. Evans","Email","11d ago"]],
+      note:"Missing contact details block every automation — <b>/segmentation</b> flags them for front-desk capture."},
+  },
 };
 
 /* ============================================================================
@@ -420,8 +481,77 @@ function showTT(html,x,y){ tt.innerHTML=html; tt.style.opacity=1;
   if(nx+w>window.innerWidth-8)nx=x-w-14; if(ny<8)ny=y+18; tt.style.left=nx+"px"; tt.style.top=ny+"px"; }
 function hideTT(){ tt.style.opacity=0; }
 
+/* ---- drill-down drawer ---- */
+function openDrawer(title, sub, bodyHtml, afterRender){
+  $(".dw-title").textContent=title; $(".dw-sub").textContent=sub||"";
+  $(".dw-body").innerHTML=bodyHtml; document.body.classList.add("dw-open");
+  $("#drawer").setAttribute("aria-hidden","false");
+  if(afterRender) requestAnimationFrame(afterRender);
+}
+function closeDrawer(){ document.body.classList.remove("dw-open"); $("#drawer").setAttribute("aria-hidden","true"); hideTT(); }
+function drillTable(cols, rows){
+  return `<table><thead><tr>${cols.map(c=>`<th>${c}</th>`).join("")}</tr></thead><tbody>`+
+    rows.map(r=>`<tr>${r.map((c,i)=>`<td${i===0?' style="font-weight:600"':' class="num"'}>${c}</td>`).join("")}</tr>`).join("")+`</tbody></table>`;
+}
+function openInsightDrill(agent){
+  const d=DATA.drill[agent]; if(!d) return;
+  const body=`${drillTable(d.cols,d.rows)}
+    <div class="mini" style="margin-top:10px">Showing ${d.rows.length} of ${d.total} · sample data</div>
+    <div class="dw-note">${d.note}</div>`;
+  openDrawer(d.title, d.sub, body);
+}
+function openKpiDrill(key){
+  const k=DATA.kpis[TF].find(x=>x.key===key); if(!k) return;
+  const raw=k.prev?((k.v-k.prev)/k.prev*100):0, good=k.invert?raw<0:raw>0;
+  const cls=Math.abs(raw)<0.5?"flat":(good?"up":"down");
+  const val=k.cur?money(k.v,k.dec||0):fmtInt(k.v);
+  const ctx={
+    revenue:{h:"Revenue by stream", fn:c=>{hbars(c,{items:DATA.streams.map(s=>({name:s.name,v:s.v,c:s.c})),fmt:v=>v+"%"});}, src:"the GymMaster Reporting API V2 (sales summary)"},
+    members:{h:"Membership status", fn:c=>hbars(c,{items:DATA.memberStatus.map(m=>({name:m.name,v:m.v,c:`var(--${m.tone})`})),fmt:fmtInt}), src:"the GymMaster Member API (membership status)"},
+    new:{h:"New members by source", fn:c=>hbars(c,{items:DATA.marketing.channels.map((x,i)=>({name:x.name,v:x.v,c:`var(--c${i+1})`})),fmt:v=>v+"%"}), src:"GymMaster signups + Meta attribution"},
+    bookings:{h:"Bookings by day", fn:c=>barChart(c,{labels:DATA.bookingsByDay.map(d=>d.name),data:DATA.bookingsByDay.map(d=>d.v),color:"var(--c1)",height:200,fmt:fmtInt}), src:"the GymMaster Reporting API V2 (booking summary)"},
+    arpu:{h:"Revenue by package", fn:c=>hbars(c,{items:DATA.packages,color:"var(--c1)",fmt:v=>money(v)}), src:"the GymMaster Reporting API V2 (sales by membership type)"},
+    cac:{h:"Cost per new member — trend", fn:c=>lineChart(c,{labels:DATA.marketing.cac.labels,series:[{name:"CAC",data:DATA.marketing.cac.v,color:"var(--c3)",area:true}],fmt:v=>money(v,2),height:200,zero:false}), src:"Meta Ads insights via marketing_report.py"},
+  }[key];
+  const labels=k.spark.map((_,i)=>i===k.spark.length-1?"now":(i===0?"start":""));
+  const mult=key==="revenue"?1000:1;
+  const body=`
+    <div class="dw-metric"><span class="m-val num">${val}</span>
+      <span class="delta ${cls}">${cls!=="flat"?arrow(raw>0):""}${Math.abs(raw).toFixed(1)}% vs prev ${TF}</span></div>
+    <div id="dk-trend" style="margin:8px 0 2px"></div>
+    ${ctx?`<div class="sec-h" style="margin:22px 2px 10px"><h2 style="font-size:15px">${ctx.h}</h2></div><div id="dk-ctx"></div>`:""}
+    <div class="dw-note">Sample data. Live: this pulls from <b>${ctx?ctx.src:"the GymMaster Reporting API V2"}</b>.</div>`;
+  openDrawer(k.lab, `trend over the last ${k.spark.length} periods`, body, ()=>{
+    lineChart($("#dk-trend"),{labels,series:[{name:k.lab,data:k.spark,color:k.invert?"var(--c3)":"var(--c1)",area:true}],
+      fmt:v=>k.cur?money(v*mult,k.dec||0):fmtInt(v),height:172,zero:false});
+    if(ctx) ctx.fn($("#dk-ctx"));
+  });
+}
+
+/* ---- sortable tables ---- */
+function makeSortable(table){
+  if(!table) return;
+  const ths=[...table.querySelectorAll("thead th")];
+  ths.forEach((th,ci)=>{
+    th.classList.add("sortable"); th.insertAdjacentHTML("beforeend",` <span class="caret">▲</span>`);
+    th.addEventListener("click",()=>{
+      const tb=table.querySelector("tbody"), rows=[...tb.querySelectorAll("tr")];
+      const asc=!th.classList.contains("asc");
+      ths.forEach(t=>{t.classList.remove("asc","desc"); const c=t.querySelector(".caret"); if(c)c.textContent="▲";});
+      th.classList.add(asc?"asc":"desc"); th.querySelector(".caret").textContent=asc?"▲":"▼";
+      const parse=tr=>{const t=(tr.children[ci].innerText||"").trim(); const n=parseFloat(t.replace(/[^0-9.\-]/g,""));
+        return {t, n, isNum:/[0-9]/.test(t)&&!isNaN(n)};};
+      rows.sort((a,b)=>{const A=parse(a),B=parse(b);
+        if(A.isNum&&B.isNum) return asc?A.n-B.n:B.n-A.n;
+        return asc?A.t.localeCompare(B.t):B.t.localeCompare(A.t);});
+      rows.forEach(r=>tb.appendChild(r));
+    });
+  });
+}
+
 /* ---- SVG line/area chart with crosshair hover (single or dual series) ---- */
 function lineChart(el, {labels, series, height=260, fmt=(v)=>v, yUnit="", zero=true}){
+  if(!el) return;
   const W = el.clientWidth||760, H=height, P={t:16,r:16,b:28,l:42};
   const iw=W-P.l-P.r, ih=H-P.t-P.b;
   const all = series.flatMap(s=>s.data);
@@ -473,6 +603,7 @@ function spark(data, color, up){
 
 /* ---- vertical bar chart with per-bar hover ---- */
 function barChart(el,{labels,data,color="var(--c1)",height=240,fmt=(v)=>v,unit=""}){
+  if(!el) return;
   const W=el.clientWidth||600,H=height,P={t:14,r:8,b:28,l:38},iw=W-P.l-P.r,ih=H-P.t-P.b;
   const max=Math.max(...data)*1.12, bw=iw/labels.length*0.6, gap=iw/labels.length;
   let grid="",axis="",bars="";
@@ -491,6 +622,7 @@ function barChart(el,{labels,data,color="var(--c1)",height=240,fmt=(v)=>v,unit="
 
 /* ---- donut with hover ---- */
 function donut(el,{items,size=176,thick=26,fmt=(v)=>v,center}){
+  if(!el) return;
   const total=items.reduce((a,b)=>a+b.v,0),r=(size-thick)/2,cx=size/2,cy=size/2,C=2*Math.PI*r;
   let off=0,segs="";
   items.forEach((it,i)=>{const frac=it.v/total,len=frac*C;
@@ -507,6 +639,7 @@ function donut(el,{items,size=176,thick=26,fmt=(v)=>v,center}){
 
 /* ---- horizontal bars ---- */
 function hbars(el,{items,color="var(--c1)",fmt=(v)=>v}){
+  if(!el) return;
   const max=Math.max(...items.map(i=>i.v));
   el.innerHTML=items.map((it,idx)=>`<div class="hbar-row">
     <span style="color:var(--ink);font-weight:500">${it.name}</span>
@@ -558,7 +691,7 @@ function kpiTile(k){
   const [ci,...rest] = k.cur? [DATA.currency, dv.slice(1)] : [null,dv];
   const valHtml = k.cur? `<span class="cur">${DATA.currency}</span>${dv.slice(1)}` : dv;
   const col = cls==="down"?"var(--bad)":(cls==="up"?"var(--ok)":"var(--ink-3)");
-  return `<div class="card kpi">
+  return `<div class="card kpi drillable" data-drill="kpi:${k.key}" title="Click for detail">
     <div class="lab">${k.lab}</div>
     <div class="val num">${valHtml}</div>
     <div class="foot">
@@ -571,7 +704,7 @@ function kpiTile(k){
 }
 
 function insCard(it){
-  return `<div class="card ins ${it.tone}">
+  return `<div class="card ins ${it.tone} drillable" data-drill="ins:${it.agent}" title="Click for the affected clients">
     <div class="rowflex" style="justify-content:space-between">
       <div class="ic">${svgIc(IC[it.ic])}</div>
     </div>
@@ -663,6 +796,7 @@ function renderRevenue(){
     rev.labels.map((l,i)=>{const c=rev.current[i],p=rev.previous[i],ch=((c-p)/p*100);
       return `<tr><td>${l}</td><td class="num">${money(c*1000)}</td><td class="num" style="color:var(--ink-3)">${money(p*1000)}</td><td><span class="delta ${ch>=0?'up':'down'}" style="font-size:12px">${arrow(ch>=0)}${Math.abs(ch).toFixed(1)}%</span></td></tr>`;}).join("")+
     `</tbody></table>`;
+  makeSortable($("#rv-table table"));
 }
 
 /* ---------- MEMBERS ---------- */
@@ -697,6 +831,7 @@ function renderMembers(){
     DATA.roster.map(r=>{const lab={ok:"Active",warn:"At risk",bad:"Lapsed"}[r.status];
       return `<tr><td style="font-weight:600">${r.name}</td><td>${r.pkg}</td><td>${r.last}</td><td class="num">${r.visits}</td><td class="num">${money(r.spend)}</td><td><span class="pill ${r.status}"><span class="dot"></span>${lab}</span></td></tr>`;}).join("")+
     `</tbody></table>`;
+  makeSortable($("#mb-roster table"));
 }
 
 /* ---------- MARKETING ---------- */
@@ -829,6 +964,14 @@ document.addEventListener("DOMContentLoaded",()=>{
   $("#tf").addEventListener("click",e=>{const b=e.target.closest("button"); if(!b)return;
     TF=b.dataset.tf; document.querySelectorAll("#tf button").forEach(x=>x.classList.toggle("on",x===b)); renderAll();});
   renderOverview();
+  // drill-down drawer: open on any [data-drill] click, close on scrim / × / Esc
+  document.addEventListener("click",e=>{
+    const d=e.target.closest("[data-drill]");
+    if(d){ const [kind,key]=d.dataset.drill.split(":"); kind==="ins"?openInsightDrill(key):openKpiDrill(key); return; }
+  });
+  $("#scrim").addEventListener("click",closeDrawer);
+  $("#dwClose").addEventListener("click",closeDrawer);
+  document.addEventListener("keydown",e=>{ if(e.key==="Escape") closeDrawer(); });
   let rt; window.addEventListener("resize",()=>{clearTimeout(rt);rt=setTimeout(renderAll,180);});
 });
 </script>
