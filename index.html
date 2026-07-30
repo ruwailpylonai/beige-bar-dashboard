@@ -41,6 +41,7 @@
   }
   *{box-sizing:border-box}
   html,body{margin:0;padding:0}
+  html{overflow-x:hidden}
   body{
     font-family:var(--sans); color:var(--ink); background:var(--bg);
     background-image:
@@ -88,6 +89,9 @@
   .seg button{font-family:var(--sans);font-size:13px;color:var(--ink-2);background:none;border:0;padding:7px 14px;
     border-radius:8px;cursor:pointer;transition:.15s;font-weight:500}
   .seg button.on{background:var(--surface);color:var(--ink);box-shadow:var(--shadow);font-weight:600}
+  .expbtn{font-family:var(--sans);font-size:13px;font-weight:600;color:var(--ink-2);background:var(--surface-2);
+    border:1px solid var(--line);padding:8px 13px;border-radius:10px;cursor:pointer;transition:.15s}
+  .expbtn:hover{background:var(--surface);color:var(--ink);box-shadow:var(--shadow)}
   /* ---------- layout ---------- */
   .view{padding:26px 34px 0;display:none;animation:fade .35s ease both}
   .view.on{display:block}
@@ -102,7 +106,28 @@
   .sec-h h2{font-family:var(--serif);font-weight:400;font-size:20px;margin:0}
   .sec-h .hint{font-size:12.5px;color:var(--ink-3)}
   @media(max-width:1240px){.row-kpi{grid-template-columns:repeat(3,1fr)}.row-ins{grid-template-columns:repeat(3,1fr)}}
-  @media(max-width:980px){.app{grid-template-columns:1fr}aside{display:none}.row-2,.row-2b,.row-3{grid-template-columns:1fr}}
+  @media(max-width:980px){
+    .app{grid-template-columns:1fr;overflow-x:hidden}
+    aside{position:static;height:auto;width:100%;flex-direction:column;padding:14px 16px 8px;border-right:0;border-bottom:1px solid rgba(255,255,255,.08)}
+    .brand{padding:0 4px 12px}
+    nav{flex-direction:row;overflow-x:auto;gap:6px;margin-top:0;-webkit-overflow-scrolling:touch}
+    .navi{flex:0 0 auto;padding:9px 13px} .navi span{white-space:nowrap}
+    .aside-foot{display:none}
+    main,.view,.grid,.card,.sec-h{min-width:0;max-width:100%}
+    .grid>*{min-width:0}
+    .top{flex-wrap:wrap;gap:10px;padding:16px 18px}
+    .sec-h{flex-wrap:wrap}
+    .view{padding:18px 16px 0}
+    .row-2,.row-2b,.row-3{grid-template-columns:1fr}
+    .row-kpi,.row-ins{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+    #mb-roster,#rv-table{overflow-x:auto} #mb-roster table,#rv-table table{min-width:540px}
+  }
+  @media(max-width:560px){
+    .row-kpi,.row-ins{grid-template-columns:1fr!important}
+    .sec-h .hint{display:none}
+    .top h1{font-size:20px} .foot-note{padding:22px 16px 0}
+    .kpi .val,.big-hero{font-size:28px}
+  }
   /* ---------- cards ---------- */
   .card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:18px 20px;box-shadow:var(--shadow)}
   .card.pad-lg{padding:22px 24px}
@@ -256,6 +281,7 @@
         <h1 id="viewTitle">Studio Overview</h1>
       </div>
       <div class="spacer"></div>
+      <button id="exportBtn" class="expbtn" title="Download this view's data as CSV">⤓ Export</button>
       <div class="seg" id="tf">
         <button data-tf="month">Month</button>
         <button data-tf="quarter" class="on">Quarter</button>
@@ -547,6 +573,28 @@ function makeSortable(table){
       rows.forEach(r=>tb.appendChild(r));
     });
   });
+}
+
+/* ---- CSV export (current view) ---- */
+function toCSV(rows){ return rows.map(r=>r.map(c=>{c=(""+c).replace(/"/g,'""'); return /[",\n]/.test(c)?`"${c}"`:c;}).join(",")).join("\n"); }
+function downloadCSV(name, text){
+  const blob=new Blob([text],{type:"text/csv;charset=utf-8"}), url=URL.createObjectURL(blob);
+  const a=document.createElement("a"); a.href=url; a.download=name; document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(()=>URL.revokeObjectURL(url),1000);
+}
+function exportCSV(view){
+  let rows, name;
+  if(view==="revenue"){ const r=DATA.revenue.year;
+    rows=[["Month","This year ($)","Last year ($)"]].concat(r.labels.map((l,i)=>[l,Math.round(r.current[i]*1000),Math.round(r.previous[i]*1000)])); name="beigebar-revenue-year"; }
+  else if(view==="members"){
+    rows=[["Client","Package","Last visit","Visits","Spend ($)","Status"]].concat(DATA.roster.map(r=>[r.name,r.pkg,r.last,r.visits,r.spend,{ok:"Active",warn:"At risk",bad:"Lapsed"}[r.status]])); name="beigebar-members"; }
+  else if(view==="marketing"){
+    rows=[["Acquisition channel","Share (%)"]].concat(DATA.marketing.channels.map(c=>[c.name,c.v])); name="beigebar-marketing-channels"; }
+  else if(view==="reviews"){
+    rows=[["Reviewer","Rating","Source","Date","Responded","Review"]].concat(DATA.reviews.recent.map(r=>[r.who,r.s,r.source,r.date,r.responded?"yes":"no",r.t])); name="beigebar-reviews"; }
+  else { const k=DATA.kpis[TF];
+    rows=[["Metric","Value","Previous","Change (%)"]].concat(k.map(x=>[x.lab,x.v,x.prev,(((x.v-x.prev)/x.prev)*100).toFixed(1)])); name="beigebar-overview-"+TF; }
+  downloadCSV(name+"_SAMPLE.csv", "# Beige Bar — SAMPLE data (not connected to GymMaster/Meta)\n"+toCSV(rows));
 }
 
 /* ---- SVG line/area chart with crosshair hover (single or dual series) ---- */
@@ -971,6 +1019,7 @@ document.addEventListener("DOMContentLoaded",()=>{
   });
   $("#scrim").addEventListener("click",closeDrawer);
   $("#dwClose").addEventListener("click",closeDrawer);
+  $("#exportBtn").addEventListener("click",()=>exportCSV(CURRENT));
   document.addEventListener("keydown",e=>{ if(e.key==="Escape") closeDrawer(); });
   let rt; window.addEventListener("resize",()=>{clearTimeout(rt);rt=setTimeout(renderAll,180);});
 });
