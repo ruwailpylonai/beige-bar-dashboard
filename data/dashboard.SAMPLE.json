@@ -1,0 +1,1264 @@
+{
+  "currency": "$",
+  "locale": "en-AU",
+  "kpis": {
+    "quarter": [
+      {
+        "key": "revenue",
+        "lab": "Revenue",
+        "v": 84240,
+        "prev": 76180,
+        "cur": true,
+        "spark": [
+          52,
+          58,
+          55,
+          63,
+          61,
+          68,
+          72,
+          70,
+          78,
+          81,
+          79,
+          84
+        ]
+      },
+      {
+        "key": "members",
+        "lab": "Active Members",
+        "v": 432,
+        "prev": 409,
+        "spark": [
+          398,
+          402,
+          405,
+          409,
+          412,
+          418,
+          421,
+          424,
+          426,
+          428,
+          430,
+          432
+        ]
+      },
+      {
+        "key": "new",
+        "lab": "New Members",
+        "v": 138,
+        "prev": 121,
+        "spark": [
+          9,
+          11,
+          10,
+          13,
+          12,
+          14,
+          12,
+          15,
+          13,
+          16,
+          14,
+          17
+        ]
+      },
+      {
+        "key": "bookings",
+        "lab": "Appointments",
+        "v": 1846,
+        "prev": 1712,
+        "spark": [
+          132,
+          140,
+          138,
+          150,
+          146,
+          158,
+          152,
+          160,
+          158,
+          166,
+          162,
+          174
+        ]
+      },
+      {
+        "key": "arpu",
+        "lab": "Avg Spend / Client",
+        "v": 58.4,
+        "prev": 55.1,
+        "cur": true,
+        "dec": 1,
+        "spark": [
+          53,
+          54,
+          54,
+          55,
+          55,
+          56,
+          56,
+          57,
+          57,
+          58,
+          58,
+          58
+        ]
+      },
+      {
+        "key": "cac",
+        "lab": "Cost / New Member",
+        "v": 31.7,
+        "prev": 37.2,
+        "cur": true,
+        "dec": 1,
+        "invert": true,
+        "spark": [
+          41,
+          39,
+          38,
+          37,
+          36,
+          35,
+          34,
+          34,
+          33,
+          33,
+          32,
+          32
+        ]
+      }
+    ],
+    "month": [
+      {
+        "key": "revenue",
+        "lab": "Revenue",
+        "v": 29680,
+        "prev": 27430,
+        "cur": true,
+        "spark": [
+          6.1,
+          6.4,
+          6.8,
+          7,
+          7.3,
+          7.6,
+          7.9,
+          8.1
+        ]
+      },
+      {
+        "key": "members",
+        "lab": "Active Members",
+        "v": 432,
+        "prev": 426,
+        "spark": [
+          426,
+          427,
+          428,
+          429,
+          430,
+          431,
+          431,
+          432
+        ]
+      },
+      {
+        "key": "new",
+        "lab": "New Members",
+        "v": 47,
+        "prev": 43,
+        "spark": [
+          4,
+          6,
+          5,
+          7,
+          6,
+          8,
+          6,
+          9
+        ]
+      },
+      {
+        "key": "bookings",
+        "lab": "Appointments",
+        "v": 642,
+        "prev": 604,
+        "spark": [
+          70,
+          74,
+          76,
+          80,
+          78,
+          84,
+          86,
+          94
+        ]
+      },
+      {
+        "key": "arpu",
+        "lab": "Avg Spend / Client",
+        "v": 59.1,
+        "prev": 57.8,
+        "cur": true,
+        "dec": 1,
+        "spark": [
+          57,
+          57,
+          58,
+          58,
+          58,
+          59,
+          59,
+          59
+        ]
+      },
+      {
+        "key": "cac",
+        "lab": "Cost / New Member",
+        "v": 30.4,
+        "prev": 33.1,
+        "cur": true,
+        "dec": 1,
+        "invert": true,
+        "spark": [
+          34,
+          33,
+          33,
+          32,
+          32,
+          31,
+          31,
+          30
+        ]
+      }
+    ],
+    "year": [
+      {
+        "key": "revenue",
+        "lab": "Revenue",
+        "v": 312800,
+        "prev": 248400,
+        "cur": true,
+        "spark": [
+          19,
+          21,
+          22,
+          24,
+          23,
+          26,
+          27,
+          28,
+          29,
+          30,
+          31,
+          32
+        ]
+      },
+      {
+        "key": "members",
+        "lab": "Active Members",
+        "v": 432,
+        "prev": 351,
+        "spark": [
+          351,
+          360,
+          372,
+          381,
+          390,
+          398,
+          406,
+          414,
+          420,
+          425,
+          429,
+          432
+        ]
+      },
+      {
+        "key": "new",
+        "lab": "New Members",
+        "v": 498,
+        "prev": 404,
+        "spark": [
+          34,
+          36,
+          38,
+          40,
+          39,
+          42,
+          43,
+          44,
+          45,
+          45,
+          46,
+          46
+        ]
+      },
+      {
+        "key": "bookings",
+        "lab": "Appointments",
+        "v": 7024,
+        "prev": 5910,
+        "spark": [
+          520,
+          540,
+          560,
+          580,
+          600,
+          620,
+          600,
+          630,
+          640,
+          650,
+          660,
+          674
+        ]
+      },
+      {
+        "key": "arpu",
+        "lab": "Avg Spend / Client",
+        "v": 57.2,
+        "prev": 52.4,
+        "cur": true,
+        "dec": 1,
+        "spark": [
+          52,
+          53,
+          53,
+          54,
+          55,
+          55,
+          56,
+          56,
+          57,
+          57,
+          57,
+          57
+        ]
+      },
+      {
+        "key": "cac",
+        "lab": "Cost / New Member",
+        "v": 33.9,
+        "prev": 41.8,
+        "cur": true,
+        "dec": 1,
+        "invert": true,
+        "spark": [
+          42,
+          41,
+          40,
+          39,
+          38,
+          37,
+          36,
+          35,
+          35,
+          34,
+          34,
+          34
+        ]
+      }
+    ]
+  },
+  "revenue": {
+    "quarter": {
+      "labels": [
+        "W1",
+        "W2",
+        "W3",
+        "W4",
+        "W5",
+        "W6",
+        "W7",
+        "W8",
+        "W9",
+        "W10",
+        "W11",
+        "W12",
+        "W13"
+      ],
+      "current": [
+        5.9,
+        6.2,
+        6,
+        6.6,
+        6.4,
+        7,
+        6.8,
+        7.3,
+        7.1,
+        7.6,
+        7.4,
+        7.9,
+        8.1
+      ],
+      "previous": [
+        5.4,
+        5.6,
+        5.5,
+        5.9,
+        5.8,
+        6.2,
+        6.1,
+        6.4,
+        6.3,
+        6.7,
+        6.6,
+        6.9,
+        7.1
+      ]
+    },
+    "month": {
+      "labels": [
+        "Jul 1",
+        "Jul 5",
+        "Jul 9",
+        "Jul 13",
+        "Jul 17",
+        "Jul 21",
+        "Jul 25",
+        "Jul 29"
+      ],
+      "current": [
+        3.3,
+        3.6,
+        3.9,
+        3.8,
+        4.1,
+        4,
+        4.4,
+        4.6
+      ],
+      "previous": [
+        3.1,
+        3.3,
+        3.5,
+        3.5,
+        3.7,
+        3.7,
+        3.9,
+        4.1
+      ]
+    },
+    "year": {
+      "labels": [
+        "Aug",
+        "Sep",
+        "Oct",
+        "Nov",
+        "Dec",
+        "Jan",
+        "Feb",
+        "Mar",
+        "Apr",
+        "May",
+        "Jun",
+        "Jul"
+      ],
+      "current": [
+        19.4,
+        21.2,
+        22.8,
+        24.1,
+        28.6,
+        23.4,
+        26.1,
+        27.3,
+        28,
+        29.2,
+        30.8,
+        31.9
+      ],
+      "previous": [
+        15.1,
+        16.4,
+        17.2,
+        18,
+        22.4,
+        18.1,
+        19.8,
+        20.6,
+        21.2,
+        22,
+        23.1,
+        24.5
+      ]
+    }
+  },
+  "streams": [
+    {
+      "name": "Memberships",
+      "v": 58,
+      "c": "var(--c1)"
+    },
+    {
+      "name": "Casual tans",
+      "v": 29,
+      "c": "var(--c2)"
+    },
+    {
+      "name": "Retail & extend",
+      "v": 13,
+      "c": "var(--c4)"
+    }
+  ],
+  "payments": [
+    {
+      "name": "Direct Debit",
+      "v": 61
+    },
+    {
+      "name": "Card",
+      "v": 31
+    },
+    {
+      "name": "Cash / Other",
+      "v": 8
+    }
+  ],
+  "packages": [
+    {
+      "name": "Unlimited Member",
+      "v": 34200
+    },
+    {
+      "name": "10-Tan Pack",
+      "v": 19850
+    },
+    {
+      "name": "Casual Single",
+      "v": 14300
+    },
+    {
+      "name": "Bridal / Event",
+      "v": 9600
+    },
+    {
+      "name": "Retail & tan-extend",
+      "v": 6290
+    }
+  ],
+  "funnel": [
+    {
+      "name": "Enquiries",
+      "v": 920,
+      "c": "#D9A45B"
+    },
+    {
+      "name": "First tan booked",
+      "v": 548,
+      "c": "#C98F3C"
+    },
+    {
+      "name": "Rebooked (repeat)",
+      "v": 361,
+      "c": "#B77C2A"
+    },
+    {
+      "name": "Converted to member",
+      "v": 172,
+      "c": "#9A5E14"
+    },
+    {
+      "name": "Retained 90d+",
+      "v": 149,
+      "c": "#7C4A0E"
+    }
+  ],
+  "memberStatus": [
+    {
+      "name": "Active",
+      "v": 432,
+      "tone": "ok"
+    },
+    {
+      "name": "Paused / suspended",
+      "v": 37,
+      "tone": "warn"
+    },
+    {
+      "name": "Cancelled (90d)",
+      "v": 24,
+      "tone": "bad"
+    }
+  ],
+  "retention": {
+    "labels": [
+      "Aug",
+      "Sep",
+      "Oct",
+      "Nov",
+      "Dec",
+      "Jan",
+      "Feb",
+      "Mar",
+      "Apr",
+      "May",
+      "Jun",
+      "Jul"
+    ],
+    "rate": [
+      81,
+      82,
+      82,
+      83,
+      84,
+      84,
+      85,
+      85,
+      86,
+      86,
+      87,
+      87
+    ]
+  },
+  "bookingsByDay": [
+    {
+      "name": "Mon",
+      "v": 198
+    },
+    {
+      "name": "Tue",
+      "v": 172
+    },
+    {
+      "name": "Wed",
+      "v": 214
+    },
+    {
+      "name": "Thu",
+      "v": 266
+    },
+    {
+      "name": "Fri",
+      "v": 352
+    },
+    {
+      "name": "Sat",
+      "v": 398
+    },
+    {
+      "name": "Sun",
+      "v": 246
+    }
+  ],
+  "marketing": {
+    "spend": {
+      "labels": [
+        "Feb",
+        "Mar",
+        "Apr",
+        "May",
+        "Jun",
+        "Jul"
+      ],
+      "v": [
+        1180,
+        1240,
+        1320,
+        1410,
+        1380,
+        1490
+      ]
+    },
+    "cac": {
+      "labels": [
+        "Feb",
+        "Mar",
+        "Apr",
+        "May",
+        "Jun",
+        "Jul"
+      ],
+      "v": [
+        36.4,
+        35.1,
+        34,
+        33.2,
+        31.8,
+        30.4
+      ]
+    },
+    "roas": 4.7,
+    "spendMonth": 1490,
+    "newFromAds": 49,
+    "leads": 214,
+    "costPerLead": 6.96,
+    "channels": [
+      {
+        "name": "Meta / Instagram",
+        "v": 64
+      },
+      {
+        "name": "Google Business",
+        "v": 19
+      },
+      {
+        "name": "Referral / word-of-mouth",
+        "v": 11
+      },
+      {
+        "name": "Walk-in",
+        "v": 6
+      }
+    ]
+  },
+  "reviews": {
+    "rating": 4.8,
+    "count": 412,
+    "newThisMonth": 18,
+    "responseRate": 92,
+    "avgResponseHrs": 6,
+    "trend": {
+      "labels": [
+        "Feb",
+        "Mar",
+        "Apr",
+        "May",
+        "Jun",
+        "Jul"
+      ],
+      "v": [
+        4.6,
+        4.6,
+        4.7,
+        4.7,
+        4.8,
+        4.8
+      ]
+    },
+    "dist": [
+      {
+        "s": 5,
+        "v": 346
+      },
+      {
+        "s": 4,
+        "v": 44
+      },
+      {
+        "s": 3,
+        "v": 13
+      },
+      {
+        "s": 2,
+        "v": 5
+      },
+      {
+        "s": 1,
+        "v": 4
+      }
+    ],
+    "sources": [
+      {
+        "name": "Google",
+        "v": 312,
+        "rating": 4.8
+      },
+      {
+        "name": "Facebook",
+        "v": 78,
+        "rating": 4.7
+      },
+      {
+        "name": "Instagram",
+        "v": 22,
+        "rating": 4.9
+      }
+    ],
+    "sentiment": [
+      {
+        "name": "Positive",
+        "v": 390,
+        "tone": "ok"
+      },
+      {
+        "name": "Neutral",
+        "v": 16,
+        "tone": "warn"
+      },
+      {
+        "name": "Negative",
+        "v": 6,
+        "tone": "bad"
+      }
+    ],
+    "needsResponse": [
+      {
+        "who": "Hannah W.",
+        "s": 3,
+        "source": "Google",
+        "date": "1d ago",
+        "snippet": "Loved the tan but reception was really busy at pickup — waited a while."
+      },
+      {
+        "who": "Priya K.",
+        "s": 2,
+        "source": "Facebook",
+        "date": "2d ago",
+        "snippet": "Booking glitch double-charged me. Sorted now but was frustrating."
+      },
+      {
+        "who": "Demi L.",
+        "s": 4,
+        "source": "Google",
+        "date": "3d ago",
+        "snippet": "Great colour! Would love a few earlier Saturday slots."
+      }
+    ],
+    "recent": [
+      {
+        "who": "Sarah M.",
+        "s": 5,
+        "source": "Google",
+        "date": "2d ago",
+        "responded": true,
+        "t": "Best tan in Adelaide — Brooke always nails the shade. Booking is so easy now."
+      },
+      {
+        "who": "Jess T.",
+        "s": 5,
+        "source": "Instagram",
+        "date": "3d ago",
+        "responded": true,
+        "t": "Membership is such good value. Never streaky, lasts a full week."
+      },
+      {
+        "who": "Amelia R.",
+        "s": 4,
+        "source": "Google",
+        "date": "4d ago",
+        "responded": false,
+        "t": "Lovely studio and staff. Only wish there were more Sunday slots."
+      },
+      {
+        "who": "Chloe B.",
+        "s": 5,
+        "source": "Google",
+        "date": "5d ago",
+        "responded": true,
+        "t": "Obsessed with my glow for the wedding — everyone asked where I got it done."
+      },
+      {
+        "who": "Tayla M.",
+        "s": 5,
+        "source": "Facebook",
+        "date": "6d ago",
+        "responded": true,
+        "t": "Always so welcoming and the tan lasts ages. My go-to before every event."
+      },
+      {
+        "who": "Hannah W.",
+        "s": 3,
+        "source": "Google",
+        "date": "1d ago",
+        "responded": false,
+        "t": "Loved the tan but reception was really busy at pickup — waited a while."
+      },
+      {
+        "who": "Georgia P.",
+        "s": 5,
+        "source": "Google",
+        "date": "8d ago",
+        "responded": true,
+        "t": "Best rapid tan I've tried — no biscuit smell and develops so evenly."
+      },
+      {
+        "who": "Priya K.",
+        "s": 2,
+        "source": "Facebook",
+        "date": "2d ago",
+        "responded": false,
+        "t": "Booking glitch double-charged me. Sorted now but was frustrating."
+      },
+      {
+        "who": "Demi L.",
+        "s": 4,
+        "source": "Instagram",
+        "date": "3d ago",
+        "responded": false,
+        "t": "Great colour! Would love a few earlier Saturday slots."
+      }
+    ]
+  },
+  "insights": [
+    {
+      "tone": "bad",
+      "ic": "card",
+      "big": "$1,240",
+      "t": "at risk from failed payments",
+      "d": "12 memberships bounced on last debit run.",
+      "agent": "failed-payment-churn-saver"
+    },
+    {
+      "tone": "warn",
+      "ic": "star",
+      "big": "23",
+      "t": "casual clients ready to convert",
+      "d": "5+ visits, no membership — prime for an offer.",
+      "agent": "casual-to-membership"
+    },
+    {
+      "tone": "info",
+      "ic": "clock",
+      "big": "41",
+      "t": "members lapsed 60+ days",
+      "d": "No booking in 8 weeks — win-back candidates.",
+      "agent": "win-back-engine"
+    },
+    {
+      "tone": "ok",
+      "ic": "repeat",
+      "big": "68",
+      "t": "first-timers to rebook",
+      "d": "Tanned once in 14 days, no next booking.",
+      "agent": "first-timer-repeat"
+    },
+    {
+      "tone": "warn",
+      "ic": "alert",
+      "big": "17",
+      "t": "clients missing contact info",
+      "d": "No email or mobile — blocks automations.",
+      "agent": "segmentation"
+    }
+  ],
+  "roster": [
+    {
+      "name": "Chloe Bennett",
+      "pkg": "Unlimited Member",
+      "last": "2d ago",
+      "visits": 14,
+      "spend": 712,
+      "status": "ok"
+    },
+    {
+      "name": "Mia Nguyen",
+      "pkg": "10-Tan Pack",
+      "last": "5d ago",
+      "visits": 8,
+      "spend": 340,
+      "status": "ok"
+    },
+    {
+      "name": "Ava Thompson",
+      "pkg": "Unlimited Member",
+      "last": "1d ago",
+      "visits": 19,
+      "spend": 948,
+      "status": "ok"
+    },
+    {
+      "name": "Grace Lee",
+      "pkg": "Casual Single",
+      "last": "22d ago",
+      "visits": 3,
+      "spend": 87,
+      "status": "warn"
+    },
+    {
+      "name": "Ella Roberts",
+      "pkg": "Unlimited Member",
+      "last": "63d ago",
+      "visits": 11,
+      "spend": 560,
+      "status": "bad"
+    },
+    {
+      "name": "Zoe Walker",
+      "pkg": "Bridal / Event",
+      "last": "9d ago",
+      "visits": 2,
+      "spend": 210,
+      "status": "ok"
+    }
+  ],
+  "drill": {
+    "failed-payment-churn-saver": {
+      "title": "Failed payments — at risk",
+      "sub": "$1,240 across 12 memberships · last debit run",
+      "cols": [
+        "Member",
+        "Package",
+        "Amount",
+        "Tries",
+        "Last attempt"
+      ],
+      "total": 12,
+      "rows": [
+        [
+          "Ella Roberts",
+          "Unlimited",
+          "$59",
+          "2",
+          "Today"
+        ],
+        [
+          "Sophie Grant",
+          "Unlimited",
+          "$59",
+          "3",
+          "Today"
+        ],
+        [
+          "Ruby Clarke",
+          "10-Tan Pack",
+          "$120",
+          "1",
+          "Yesterday"
+        ],
+        [
+          "Layla Reed",
+          "Unlimited",
+          "$59",
+          "2",
+          "Yesterday"
+        ],
+        [
+          "Isla Moore",
+          "Unlimited",
+          "$59",
+          "1",
+          "2d ago"
+        ],
+        [
+          "Mia Nguyen",
+          "10-Tan Pack",
+          "$120",
+          "2",
+          "2d ago"
+        ],
+        [
+          "Freya Hall",
+          "Unlimited",
+          "$59",
+          "1",
+          "3d ago"
+        ],
+        [
+          "Chloe Ward",
+          "Unlimited",
+          "$59",
+          "2",
+          "3d ago"
+        ]
+      ],
+      "note": "<b>/failed-payment-churn-saver</b> auto-retries the debit, then texts a card-update link before the membership cancels."
+    },
+    "casual-to-membership": {
+      "title": "Casual clients ready to convert",
+      "sub": "23 clients · 5+ visits, no membership",
+      "cols": [
+        "Client",
+        "Visits",
+        "Last visit",
+        "Spent"
+      ],
+      "total": 23,
+      "rows": [
+        [
+          "Grace Lee",
+          "7",
+          "3d ago",
+          "$203"
+        ],
+        [
+          "Ava Simmons",
+          "9",
+          "1d ago",
+          "$261"
+        ],
+        [
+          "Poppy Dean",
+          "6",
+          "5d ago",
+          "$174"
+        ],
+        [
+          "Zoe Walker",
+          "8",
+          "2d ago",
+          "$232"
+        ],
+        [
+          "Harper Ross",
+          "11",
+          "4d ago",
+          "$319"
+        ],
+        [
+          "Ivy Chen",
+          "6",
+          "6d ago",
+          "$174"
+        ],
+        [
+          "Mila Fox",
+          "7",
+          "1d ago",
+          "$203"
+        ],
+        [
+          "Nina Patel",
+          "10",
+          "3d ago",
+          "$290"
+        ]
+      ],
+      "note": "<b>/casual-to-membership</b> sends a tailored membership offer once a casual client crosses 5 visits."
+    },
+    "win-back-engine": {
+      "title": "Lapsed members — win-back",
+      "sub": "41 members · no booking in 60+ days",
+      "cols": [
+        "Member",
+        "Package",
+        "Last visit"
+      ],
+      "total": 41,
+      "rows": [
+        [
+          "Ella Roberts",
+          "Unlimited",
+          "63d ago"
+        ],
+        [
+          "Bella Knight",
+          "10-Tan Pack",
+          "67d ago"
+        ],
+        [
+          "Sienna Cole",
+          "Unlimited",
+          "71d ago"
+        ],
+        [
+          "Ada Perry",
+          "Casual",
+          "74d ago"
+        ],
+        [
+          "Lucy Grant",
+          "Unlimited",
+          "78d ago"
+        ],
+        [
+          "Maya Hunt",
+          "Unlimited",
+          "82d ago"
+        ],
+        [
+          "Erin Booth",
+          "10-Tan Pack",
+          "88d ago"
+        ],
+        [
+          "Tara Vance",
+          "Unlimited",
+          "91d ago"
+        ]
+      ],
+      "note": "<b>/win-back-engine</b> runs a staged re-engagement offer (come-back discount → last-chance) over two weeks."
+    },
+    "first-timer-repeat": {
+      "title": "First-timers to rebook",
+      "sub": "68 clients · one tan in 14 days, no next booking",
+      "cols": [
+        "Client",
+        "First tan",
+        "Source"
+      ],
+      "total": 68,
+      "rows": [
+        [
+          "Amelia R.",
+          "2d ago",
+          "Google"
+        ],
+        [
+          "Demi L.",
+          "3d ago",
+          "Instagram"
+        ],
+        [
+          "Holly K.",
+          "4d ago",
+          "Meta"
+        ],
+        [
+          "Jade M.",
+          "5d ago",
+          "Walk-in"
+        ],
+        [
+          "Ruby S.",
+          "6d ago",
+          "Google"
+        ],
+        [
+          "Elena V.",
+          "7d ago",
+          "Referral"
+        ],
+        [
+          "Faith O.",
+          "9d ago",
+          "Meta"
+        ],
+        [
+          "Cara D.",
+          "11d ago",
+          "Instagram"
+        ]
+      ],
+      "note": "<b>/first-timer-repeat</b> nudges a second booking 3–5 days after a first tan — the biggest retention lever."
+    },
+    "segmentation": {
+      "title": "Clients missing contact info",
+      "sub": "17 clients · no email or mobile on file",
+      "cols": [
+        "Client",
+        "Missing",
+        "Added"
+      ],
+      "total": 17,
+      "rows": [
+        [
+          "J. Smith",
+          "Email + mobile",
+          "4d ago"
+        ],
+        [
+          "A. Brown",
+          "Mobile",
+          "5d ago"
+        ],
+        [
+          "K. Taylor",
+          "Email",
+          "6d ago"
+        ],
+        [
+          "M. Wilson",
+          "Email + mobile",
+          "8d ago"
+        ],
+        [
+          "R. Davies",
+          "Mobile",
+          "9d ago"
+        ],
+        [
+          "S. Evans",
+          "Email",
+          "11d ago"
+        ]
+      ],
+      "note": "Missing contact details block every automation — <b>/segmentation</b> flags them for front-desk capture."
+    }
+  },
+  "syncedAt": "<ISO timestamp written by the sync job>"
+}

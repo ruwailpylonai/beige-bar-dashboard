@@ -84,6 +84,8 @@
   .sample{display:inline-flex;align-items:center;gap:8px;font-size:11.5px;font-weight:600;letter-spacing:.06em;
     color:var(--brand-deep);background:var(--brand-tint);border:1px solid #E7CfA6;padding:7px 12px;border-radius:999px}
   .sample .pulse{width:7px;height:7px;border-radius:50%;background:var(--brand);animation:pulse 2.4s infinite}
+  .sample.live{color:var(--ok);background:var(--ok-tint);border-color:#bfe0cb}
+  .sample.live .pulse{background:var(--ok)}
   @keyframes pulse{0%,100%{opacity:.4}50%{opacity:1}}
   .seg{display:inline-flex;background:var(--surface-2);border:1px solid var(--line);border-radius:11px;padding:3px}
   .seg button{font-family:var(--sans);font-size:13px;color:var(--ink-2);background:none;border:0;padding:7px 14px;
@@ -313,7 +315,9 @@
    DATA  — the single mock→real seam. SAMPLE values today.
    Each block notes its real source so wire-in is a field swap, not a rebuild.
    ============================================================================ */
-const DATA = {
+// ⚠️ SAMPLE dataset (fallback). At runtime the dashboard tries to fetch data/dashboard.json
+// (written by the sync agents); if present it REPLACES this and the banner flips to LIVE.
+let DATA = {
   currency: "$", locale: "en-AU",
   // ---- headline KPIs per timeframe (GymMaster Reporting API V2: KPI summary) ----
   // value, previous-period value (for delta), and a short sparkline trend
@@ -728,7 +732,34 @@ const arrow = up => `<svg viewBox="0 0 24 24">${up?'<path d="M12 19V5M5 12l7-7 7
    RENDER
    ============================================================================ */
 let TF = "quarter";
+let LIVE = false; // flipped true when real data/dashboard.json loads
 const charts = []; // re-render on resize
+
+/* ---- real-data seam (read-only static model): fetch data files the sync agents write ----
+   The sync agents (gymmaster_client.py sync + marketing_report.py) emit data/dashboard.json
+   with the SAME shape as the SAMPLE `DATA` above. If it's present + valid, it wins and the
+   banner flips to LIVE. Absent / offline (file://) / 404 → keep SAMPLE. No host backend. */
+async function loadRealData(){
+  try{
+    const res = await fetch("data/dashboard.json", {cache:"no-store"});
+    if(!res.ok) return null;
+    const json = await res.json();
+    if(json && json.kpis && json.reviews && json.revenue) return json;  // minimal shape check
+    return null;
+  }catch(e){ return null; }  // file:// or missing → silent fallback to SAMPLE
+}
+function applyBanner(){
+  const el=$(".sample"); if(!el) return;
+  if(LIVE){
+    el.classList.add("live");
+    el.innerHTML='<span class="pulse"></span> LIVE · synced '+(DATA.syncedAt||"today");
+    el.title="Connected to GymMaster + Meta (data/dashboard.json)";
+  }else{
+    el.classList.remove("live");
+    el.innerHTML='<span class="pulse"></span> SAMPLE DATA · not connected';
+    el.title="Running on a sample dataset. Deploy data/dashboard.json (sync agents) to go live.";
+  }
+}
 function reg(fn){ charts.push(fn); fn(); }
 
 function kpiTile(k){
@@ -1007,6 +1038,7 @@ function go(id){
 function renderAll(){ charts.length=0; VIEWS.find(x=>x.id===CURRENT).fn(); }
 
 document.addEventListener("DOMContentLoaded",()=>{
+  // render SAMPLE + wire listeners synchronously (instant interactivity — never block on the fetch)…
   build();
   $("#nav").addEventListener("click",e=>{const n=e.target.closest(".navi"); if(n)go(n.dataset.v);});
   $("#tf").addEventListener("click",e=>{const b=e.target.closest("button"); if(!b)return;
@@ -1022,6 +1054,8 @@ document.addEventListener("DOMContentLoaded",()=>{
   $("#exportBtn").addEventListener("click",()=>exportCSV(CURRENT));
   document.addEventListener("keydown",e=>{ if(e.key==="Escape") closeDrawer(); });
   let rt; window.addEventListener("resize",()=>{clearTimeout(rt);rt=setTimeout(renderAll,180);});
+  // …then upgrade to real data if the sync agents have published it (non-blocking)
+  loadRealData().then(real=>{ if(real){ DATA=real; LIVE=true; applyBanner(); renderAll(); } });
 });
 </script>
 </body>
