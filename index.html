@@ -42,6 +42,9 @@
   *{box-sizing:border-box}
   html,body{margin:0;padding:0}
   html{overflow-x:hidden}
+  @media (prefers-reduced-motion: reduce){
+    *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important;scroll-behavior:auto!important}
+  }
   body{
     font-family:var(--sans); color:var(--ink); background:var(--bg);
     background-image:
@@ -65,13 +68,15 @@
   .mark-logo{width:150px;height:50px;background:var(--mocha);-webkit-mask-size:contain;mask-size:contain;-webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;-webkit-mask-position:left center;mask-position:left center}
   .brand .sub{font-size:10.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--taupe);margin-top:10px}
   nav{display:flex;flex-direction:column;gap:3px;margin-top:4px}
-  .navi{display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:11px;color:#8A7A66;
+  .navi{appearance:none;-webkit-appearance:none;background:none;font-family:inherit;text-align:left;margin:0;display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:11px;color:#8A7A66;
     font-size:14px;cursor:pointer;border:1px solid transparent;transition:.15s;user-select:none}
   .navi svg{width:17px;height:17px;flex:0 0 17px;stroke:currentColor;fill:none;stroke-width:1.7}
   .navi:hover{background:rgba(150,112,81,.08);color:#5E4E3A}
   .navi.on{background:rgba(150,112,81,.14);
     color:#5E4433;border-color:rgba(150,112,81,.26)}
   .navi.on svg{stroke:var(--brand)}
+  .navi:focus-visible{outline:2px solid var(--mocha);outline-offset:2px}
+  .navi:focus:not(:focus-visible){outline:none}
   .aside-foot{margin-top:auto;padding:14px 10px 4px;border-top:1px solid var(--line)}
   .agent-chip{display:flex;align-items:center;gap:9px;font-size:12px;color:var(--taupe);padding:6px 4px}
   .agent-chip .dot{width:7px;height:7px;border-radius:50%;background:var(--ok);box-shadow:0 0 0 3px rgba(47,125,87,.18)}
@@ -1029,13 +1034,13 @@ const VIEWS=[
   {id:"reviews",lab:"Reviews",title:"Reviews & Reputation",ic:"star",fn:renderReviews},
 ];
 let CURRENT="overview";
-function build(){ $("#nav").innerHTML=VIEWS.map(v=>`<div class="navi ${v.id===CURRENT?'on':''}" data-v="${v.id}">${svgIc(IC[v.ic])}<span>${v.lab}</span></div>`).join(""); }
+function build(){ $("#nav").innerHTML=VIEWS.map(v=>`<button type="button" class="navi ${v.id===CURRENT?'on':''}" data-v="${v.id}">${svgIc(IC[v.ic])}<span>${v.lab}</span></button>`).join(""); }
 function go(id){
   CURRENT=id; const v=VIEWS.find(x=>x.id===id);
   document.querySelectorAll(".navi").forEach(n=>n.classList.toggle("on",n.dataset.v===id));
   document.querySelectorAll(".view").forEach(s=>s.classList.toggle("on",s.dataset.view===id));
   $("#crumb").textContent=v.lab; $("#viewTitle").textContent=v.title;
-  charts.length=0; v.fn(); window.scrollTo({top:0,behavior:"smooth"});
+  charts.length=0; v.fn(); window.scrollTo({top:0,behavior:matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth"});
 }
 function renderAll(){ charts.length=0; VIEWS.find(x=>x.id===CURRENT).fn(); }
 
